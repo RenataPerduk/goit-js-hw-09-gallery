@@ -70,42 +70,42 @@ const modalRef = document.querySelector('.lightbox');
 const buttonRef = document.querySelector('.lightbox__button');
 
 const markup = galleryItems
-.map(
-({ preview, original, description }, index) =>
-`<li class="gallery__item">
+  .map(
+    ({ preview, original, description }, index) =>
+      `<li class="gallery__item">
 <a class="gallery__link" href=''>
 <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" data-index="${index}"/> </a> </li>`,
-)
-.join('');
+  )
+  .join('');
 
 galleryListRef.innerHTML = markup;
 
 const onOpenModalClick = e => {
-e.preventDefault();
+  e.preventDefault();
 
-updateAttr(e.target.dataset.source, e.target.alt, e.target.dataset.index);
+  updateAttr(e.target.dataset.source, e.target.alt, e.target.dataset.index);
 
-function updateAttr(src = '', alt = '', index = 0) {
-modalImgRef.src = src;
-modalImgRef.alt = alt;
-modalImgRef.dataset.index = index;
+  function updateAttr(src = '', alt = '', index = 0) {
+    modalImgRef.src = src;
+    modalImgRef.alt = alt;
+    modalImgRef.dataset.index = index;
 
-modalRef.classList.add('is-open');
-}
+    modalRef.classList.add('is-open');
+  }
 };
 
 const onKeyboardClick = e => {
-if (e.key === 'Escape') {
-modalRef.classList.remove('is-open');
-}
+  if (e.key === 'Escape') {
+    modalRef.classList.remove('is-open');
+  }
 };
 
 const onCloseModalClick = e => {
-if (e.target.localName !== 'img') {
-modalRef.classList.remove('is-open');
+  if (e.target.localName !== 'img') {
+    modalRef.classList.remove('is-open');
 
-updateAttr();
-}
+    updateAttr();
+  }
 };
 
 galleryListRef.addEventListener('click', onOpenModalClick);
@@ -113,32 +113,32 @@ window.addEventListener('keyup', onKeyboardClick);
 window.addEventListener('click', onCloseModalClick);
 
 window.addEventListener('keydown', e => {
-if (e.code === 'ArrowLeft') {
-onArrowLeft();
-}
-if (e.code === 'ArrowRight') {
-onArrowRight();
-}
+  if (e.code === 'ArrowLeft') {
+    onArrowLeft();
+  }
+  if (e.code === 'ArrowRight') {
+    onArrowRight();
+  }
 });
 
 function onArrowLeft() {
-let index = +modalImgRef.dataset.index;
-if (index === 0) {
-newSrc(galleryItems.length - 1);
-return;
-}
-newSrc(index, -1);
+  let index = +modalImgRef.dataset.index;
+  if (index === 0) {
+    newSrc(galleryItems.length - 1);
+    return;
+  }
+  newSrc(index, -1);
 }
 function onArrowRight() {
-let index = +modalImgRef.dataset.index;
-if (index === galleryItems.length + 1) {
-newSrc(0);
-return;
-}
-newSrc(index, 1);
+  let index = +modalImgRef.dataset.index;
+  if (index === galleryItems.length + 1) {
+    newSrc(0);
+    return;
+  }
+  newSrc(index, 1);
 }
 
 function newSrc(index, step = 0) {
-modalImgRef.dataset.index = `${index + step}`;
-modalImgRef.src = galleryItems[index + step].original;
+  modalImgRef.dataset.index = `${index + step}`;
+  modalImgRef.src = galleryItems[index + step].original;
 }
